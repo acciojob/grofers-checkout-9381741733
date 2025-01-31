@@ -3,11 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
   <title>Grocery List</title>
+
+  <style>
+    /* Basic Styling for the Page */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    table {
+      width: 50%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tfoot {
+      font-weight: bold;
+    }
+  </style>
+
 </head>
 <body>
+
   <h1>Grocery List</h1>
+
   <table id="grocery-table">
     <thead>
       <tr>
@@ -31,6 +68,36 @@
     </tbody>
   </table>
 
-  <script src="script.js"></script>
+  <script>
+    // Calculate total price by summing up values from elements with class 'prices'
+    function calculateTotalPrice() {
+      const priceElements = document.querySelectorAll(".prices");
+      let total = 0;
+
+      priceElements.forEach(price => {
+        total += parseFloat(price.textContent);
+      });
+
+      return total.toFixed(2);
+    }
+
+    // Create and add a row for the total price
+    function addTotalRow() {
+      const table = document.getElementById("grocery-table");
+      const totalRow = document.createElement("tr");
+      const totalCell = document.createElement("td");
+      totalCell.colSpan = 2;
+      totalCell.textContent = `Total Price: $${calculateTotalPrice()}`;
+      totalCell.style.textAlign = "center";
+      totalCell.style.fontWeight = "bold";
+
+      totalRow.appendChild(totalCell);
+      table.appendChild(totalRow);
+    }
+
+    // Execute the function to add the total price row
+    addTotalRow();
+  </script>
+
 </body>
 </html>
