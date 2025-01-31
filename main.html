@@ -55,32 +55,32 @@
   <button onclick="calculateTotal()">Calculate Total Price</button>
 
   <script>
-    function calculateTotal() {
-      const prices = document.querySelectorAll('.prices');
-      let totalPrice = 0;
+   const getSumBtn = document.createElement("button");
+getSumBtn.append("Get Total Price");
+document.body.appendChild(getSumBtn);
 
-      prices.forEach(priceCell => {
-        totalPrice += parseFloat(priceCell.textContent);
-      });
+const getSum = () => {
+    const prices = document.querySelectorAll(".price");
 
-      // Check if total row already exists and remove it
-      const existingTotalRow = document.querySelector('.total-row');
-      if (existingTotalRow) {
-        existingTotalRow.remove();
-      }
+    let total = 0;
+    prices.forEach(price => {
+        total += Number(price.textContent);
+    });
+    let totalRow = document.getElementById("total-row");
+    if (!totalRow) {
+        totalRow = document.createElement("tr");
+        totalRow.id = "total-row";
 
-      // Create new row for total
-      const table = document.getElementById('groceryTable');
-      const newRow = document.createElement('tr');
-      newRow.classList.add('total-row');
+        const totalCell = document.createElement("td");
+        totalCell.setAttribute("colspan", "2");
+        totalCell.id = "ans"; 
 
-      const totalCell = document.createElement('td');
-      totalCell.colSpan = 2;
-      totalCell.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
-
-      newRow.appendChild(totalCell);
-      table.appendChild(newRow);
+        totalRow.appendChild(totalCell);
+        document.querySelector("table").appendChild(totalRow);
     }
+    document.getElementById("ans").textContent = Total Price: Rs ${total};
+};
+getSumBtn.addEventListener("click", getSum);
   </script>
 </body>
 </html>
