@@ -3,100 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grocery List</title>
-
-  <style>
-    /* Basic Styling for the Page */
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    table {
-      width: 50%;
-      margin: 0 auto;
-      border-collapse: collapse;
-      background: white;
-    }
-
-    th, td {
-      padding: 10px;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-
-    th {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    tfoot {
-      font-weight: bold;
-    }
-  </style>
-
+  <link rel="stylesheet" href="styles.css">
+  <title>Monthly Savings</title>
 </head>
 <body>
 
-  <h1>Grocery List</h1>
-
-  <table id="grocery-table">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="item">
-        <td>Apples</td>
-        <td class="prices">2.50</td>
-      </tr>
-      <tr class="item">
-        <td>Bananas</td>
-        <td class="prices">1.80</td>
-      </tr>
-      <tr class="item">
-        <td>Carrots</td>
-        <td class="prices">3.20</td>
-      </tr>
-    </tbody>
+  <table style="width: 100%">
+    <caption>Monthly Savings</caption>
+    <tr>
+      <th>Item</th>
+      <th>Prices in Rs</th>
+    </tr>
+    <tr>
+      <td class="item">Tea</td>
+      <td class="price">50</td>
+    </tr>
+    <tr>
+      <td class="item">Coffee</td>
+      <td class="price">70</td>
+    </tr>
+    <tr>
+      <td class="item">Biscuits</td>
+      <td class="price">100</td>
+    </tr>
+    <tr>
+      <td class="item">Rice</td>
+      <td class="price">130</td>
+    </tr>
+    <tr>
+      <td class="item">Milk</td>
+      <td class="price">50</td>
+    </tr>
   </table>
 
+  <button id="get-sum-btn">Get Total Price</button>
+
   <script>
-    // Calculate total price by summing up values from elements with class 'prices'
-    function calculateTotalPrice() {
-      const priceElements = document.querySelectorAll(".prices");
+    const getSumBtn = document.getElementById("get-sum-btn");
+
+    const getSum = () => {
+      const prices = document.querySelectorAll(".price");
       let total = 0;
 
-      priceElements.forEach(price => {
-        total += parseFloat(price.textContent);
+      prices.forEach(price => {
+        total += Number(price.textContent);
       });
 
-      return total.toFixed(2);
-    }
+      let totalRow = document.getElementById("total-row");
+      if (!totalRow) {
+        totalRow = document.createElement("tr");
+        totalRow.id = "total-row";
 
-    // Create and add a row for the total price
-    function addTotalRow() {
-      const table = document.getElementById("grocery-table");
-      const totalRow = document.createElement("tr");
-      const totalCell = document.createElement("td");
-      totalCell.colSpan = 2;
-      totalCell.textContent = `Total Price: $${calculateTotalPrice()}`;
-      totalCell.style.textAlign = "center";
-      totalCell.style.fontWeight = "bold";
+        const totalCell = document.createElement("td");
+        totalCell.setAttribute("colspan", "2");
+        totalCell.id = "ans";
 
-      totalRow.appendChild(totalCell);
-      table.appendChild(totalRow);
-    }
+        totalRow.appendChild(totalCell);
+        document.querySelector("table").appendChild(totalRow);
+      }
 
-    // Execute the function to add the total price row
-    addTotalRow();
+      document.getElementById("ans").textContent = `Total Price: Rs ${total}`;
+    };
+
+    getSumBtn.addEventListener("click", getSum);
   </script>
 
 </body>
